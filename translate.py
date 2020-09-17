@@ -30,15 +30,6 @@ def en_actions(text: str) -> None:
     play_sound(text)
 
 
-T = TypeVar('T')
-actions: Dict[str, T] = {
-    'pt': pt_actions,
-    'en': en_actions
-}
-
-
-# TEXT: str = ' '.join(string for string in sys.argv[1:]).strip()
-
 def main(a):
     pyautogui.hotkey('ctrl', 'c')
     TEXT: str = clipboard.paste()
@@ -50,6 +41,11 @@ def main(a):
         actions.get(souce_text.lang)(TEXT)
 
 
+T = TypeVar('T')
+actions: Dict[str, T] = {
+    'pt': pt_actions,
+    'en': en_actions
+}
 
 hk = SystemHotkey()
 hk.register(('alt', 'shift', 't'), callback=main)
