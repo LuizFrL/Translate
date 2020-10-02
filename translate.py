@@ -30,18 +30,21 @@ def en_actions(text: str) -> None:
     play_sound(text)
 
 
-def notify(error: str) -> None:
+def get_error_message(error: str) -> str:
     errors: Dict[str, str] = {
         '[Errno 11001] getaddrinfo failed': 'Problem was detected, could not connect to API.',
     }
 
-    message: str = errors.get(error)
+    return errors.get(error) if errors.get(error) else error
+
+
+def notify(message: str) -> None:
     notifier: win.ToastNotifier = win.ToastNotifier()
     icon_path: str = 'icone.ico'
     if message:
         notifier.show_toast('Translate', message, icon_path=icon_path, duration=10)
     else:
-        notifier.show_toast('Translate', f'We unable identify the error, please contact the developer: {error}',
+        notifier.show_toast('Translate', f'We unable identify the error, please contact the developer.',
                             duration=10, icon_path=icon_path)
 
 
@@ -52,9 +55,8 @@ def main(a):
         souce_text: Detected = trans.detect(TEXT)
         if actions.get(souce_text.lang):
             actions.get(souce_text.lang)(TEXT)
-
     except Exception as error:
-        notify(str(error))
+        notify(get_error_message(str(error)))
 
 
 T = TypeVar('T')
