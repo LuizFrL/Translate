@@ -36,7 +36,7 @@ def get_error_message(error: str) -> str:
     }
     if errors.get(error):
         return errors.get(error)
-    return error
+    return f'We unable identify the error, please contact the developer: {error}'
 
 
 def notify(message: str) -> None:
@@ -44,9 +44,6 @@ def notify(message: str) -> None:
     icon_path: str = 'icone.ico'
     if message:
         notifier.show_toast('Translate', message, icon_path=icon_path, duration=10)
-    else:
-        notifier.show_toast('Translate', f'We unable identify the error, please contact the developer.',
-                            duration=10, icon_path=icon_path)
 
 
 def main(a):
