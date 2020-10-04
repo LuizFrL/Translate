@@ -34,8 +34,9 @@ def get_error_message(error: str) -> str:
     errors: Dict[str, str] = {
         '[Errno 11001] getaddrinfo failed': 'Problem was detected, could not connect to API.',
     }
-
-    return errors.get(error) if errors.get(error) else error
+    if errors.get(error):
+        return errors.get(error)
+    return error
 
 
 def notify(message: str) -> None:
@@ -66,7 +67,7 @@ actions: Dict[str, T] = {
 }
 
 
-hotkeys: tuple = ('alt', 'shift', 'q')
+hotkeys: tuple = ('alt', 'shift', 't')
 hk = SystemHotkey()
 hk.register(hotkeys, callback=main)
 
